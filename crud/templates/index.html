@@ -1,34 +1,40 @@
 <!DOCTYPE html>
 {% block title %}
-    Index
+    The List of Users
 {% endblock %}
 
 {% block main %}
-<title> <p2> The List of Users </p2> </title>
-
-
+<br>
+<h2>Add User:</h2>
     <form action="/add" method="post">
-        <div>&nbsp &nbsp
-            <input autocomplete="off" autofocus name="name" placeholder="User's name" type="text"/>
-        </div></br>&nbsp &nbsp
-        <div>&nbsp &nbsp
-            <input autocomplete="off" autofocus name="email" placeholder="user@email.com" type="text"/>
-        </div></br>&nbsp &nbsp
-        <div>&nbsp &nbsp
-            <input type="date" name="date_of_birth" value="2019-01-01"> &nbsp
-        </div></br>
-        <button type="submit">Add User</button>
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input autocomplete="off" autofocus name="name" placeholder="User's name" type="text"/></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input autocomplete="off" autofocus name="email" placeholder="user@email.com" type="text"/></td>
+            </tr>
+            <tr>
+                <td>Date of birth: </td>
+                <td><input type="date" name="date_of_birth" placeholder="dd-mm-yyyy" pattern="\d{1,2}-\d{1,2}-\d{4}"> </td>
+            </tr>
+            <tr>
+                <td><button type="submit">Add User</button></td>
+            </tr>
     </form>
-
-
+    </table>
+<br>
+<h2>The List of Users:</h2>
 <table>
     {% for user in users %}
-        
+
         <tr>
-            <td> <a href="/get?email={{ user.email }}"> {{ user.name}} </a> </td>
-            <td>{{ user.email}} </td>
+            <td> <a href="/get?email={{ user['email'] }}"> {{ user['name'] }} </a> </td>
+            <td>{{ user['email'] }} </td>
         </tr>
-  
+
     {% endfor %}
  </table>
 

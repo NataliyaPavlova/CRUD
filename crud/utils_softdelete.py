@@ -1,9 +1,9 @@
-''' 
+'''
 Class to redefine sqlalchemy query to properly manage soft delete pattern.
 Source: https://github.com/miguelgrinberg/sqlalchemy-soft-delete/blob/master/app.py '''
 
 from flask_sqlalchemy import BaseQuery
-from utils import db
+from config import db
 
 class QueryWithSoftDelete(BaseQuery):
     _with_deleted = False
