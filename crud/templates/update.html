@@ -5,27 +5,19 @@
 
 {% block main %}
 
-  <div><a href="/get?email=">  Back to the user info </a></div><br>
+  <div><a href="/get?email={{ user['email'] }}">  Back to the user info </a></div><br>
   <div><a href="/">  Back to users' list </a></div><br>
   <div><a href="/remove?email=}}">  Remove the user from the list </a></div><br>
 
-<h2>Update User:</h2>
-    <form action="/update" method="post">
+<h2>Update User {{ user['name'] }}:</h2>
+    <form action="/update?email={{ user['email'] }}" method="post">
         <table>
             <tr>
-                <td>Name:</td>
+                <td>Name: </td><td>{{ user['name'] }}:</td>
                 <td><input autocomplete="off" autofocus name="name" placeholder="User's name" type="text"/></td>
             </tr>
             <tr>
-                <td>Old email:</td>
-                <td><input autocomplete="off" autofocus name="old_email" placeholder="user@oldemail.com" type="text"/></td>
-            </tr>
-            <tr>
-                <td>New email:</td>
-                <td><input autocomplete="off" autofocus name="new_email" placeholder="user@newemail.com" type="text"/></td>
-            </tr>
-            <tr>
-                <td>Date of birth: </td>
+                <td>Date of birth: </td><td>{{ user['date_of_birth'] }} </td>
                 <td><input type="date" name="date_of_birth" placeholder="dd-mm-yyyy" pattern="\d{1,2}-\d{1,2}-\d{4}"> </td>
             </tr>
             <tr>

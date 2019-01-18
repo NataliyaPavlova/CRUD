@@ -22,13 +22,14 @@ class UserRepository(db.Model):
         return instance.save()
 
     @classmethod
-   #@make_public
+    #@make_public
     def get_user(cls, attr_name, attr_value):
-        return db.session.query(cls).filter(getattr(cls, attr_name)==attr_value).first()
+        user = db.session.query(cls).filter(getattr(cls, attr_name)==attr_value).first()
+        return user #{'name': user.name, 'email': user.email, 'date_of_birth': user.date_of_birth, 'id': user.id}
 
     @classmethod
-    def update(cls, user_id, **kwargs):
-        user = cls.get_user('id', user_id)
+    def update(cls, email, **kwargs):
+        user = cls.get_user('email', email)
         for attr, value in kwargs.items():
             setattr(user, attr, value)
         user.save()

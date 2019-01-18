@@ -5,37 +5,11 @@
 
 {% block main %}
 
-  <div><a href="/">  Back to the users' list </a></div><br>
-  <div><a href="/update">  Update the user's info </a></div><br>
+  <div><a href="/">  Back to the users' list {{ user_id }} </a></div><br>
+  <div><a href="/update?email={{ user['email'] }}">  Update the user's info </a></div><br>
   <div><a href="/remove?email={{ user['email'] }}">  Remove the user from the list </a></div><br>
 
-{% if form %}
-<h2>Update User:</h2>
-    <form action="/update" method="post">
-        <table>
-            <tr>
-                <td>Name:</td>
-                <td><input autocomplete="off" autofocus name="name" placeholder="User's name" type="text"/></td>
-            </tr>
-            <tr>
-                <td>Old email:</td>
-                <td><input autocomplete="off" autofocus name="old_email" placeholder="user@oldemail.com" type="text"/></td>
-            </tr>
-            <tr>
-                <td>New email:</td>
-                <td><input autocomplete="off" autofocus name="new_email" placeholder="user@newemail.com" type="text"/></td>
-            </tr>
-            <tr>
-                <td>Date of birth: </td>
-                <td><input type="date" name="date_of_birth" placeholder="dd-mm-yyyy" pattern="\d{1,2}-\d{1,2}-\d{4}"> </td>
-            </tr>
-            <tr>
-                <td><button type="submit">Update User</button></td>
-            </tr>
-        </table>
-    </form>
-{% endif %}
-
+<h2> User Info for {{ user['name'] }}:</h2>
   <br>
   <table>
       <tr>

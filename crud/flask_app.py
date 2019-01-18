@@ -52,19 +52,16 @@ def get_user():
 @app.route("/update", methods = ['POST', 'GET'])
 def update_user():
     ''' Update user's info'''
-
-     # User reached route via POST (as by submitting a form via POST)
-    if request.method == "POST":
-        user = User().get_user('email', request.form.get("old_email"))
-        result = User().update(user.id,
+    if request.method == "GET":
+        email = request.values.get('email')
+        user = User().get_user('email', email)
+        return render_template("update.html", title='Update', user=user)
+    else:  # request.method == "POST":
+        result = User().update(email=request.values.get('email'),
                                name=request.form.get("name"),
                                date_of_birth=request.form.get("date_of_birth"),
-                               email=request.form.get("new_email")
-                               )
-    # User reached route via GET
-    else:
-        return render_template("update.html", title='Update')
-    return render_template('user_info.html', title='User Info', user=result)
+                              )
+        return render_template('user_info.html', title='User Info', user=result)
 
 
 @app.route("/remove", methods = ['GET'])
