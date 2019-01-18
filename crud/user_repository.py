@@ -1,5 +1,5 @@
 from config import db, Constants
-from helpers import make_public
+from helpers import user_public_info, make_public
 from utils_softdelete import QueryWithSoftDelete
 
 # Depository with user's functionality
@@ -22,14 +22,15 @@ class UserRepository(db.Model):
         return instance.save()
 
     @classmethod
-    #@make_public
+    @make_public
     def get_user(cls, attr_name, attr_value):
         user = db.session.query(cls).filter(getattr(cls, attr_name)==attr_value).first()
-        return user #{'name': user.name, 'email': user.email, 'date_of_birth': user.date_of_birth, 'id': user.id}
+        return user
 
     @classmethod
+    @make_public
     def update(cls, email, **kwargs):
-        user = cls.get_user('email', email)
+        user = db.session.query(cls).filter(getattr(cls, 'email')==email).first()
         for attr, value in kwargs.items():
             setattr(user, attr, value)
         user.save()

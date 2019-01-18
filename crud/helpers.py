@@ -9,12 +9,13 @@ def apology(message, code=400):
 def make_public(function):
     ''' Decorator to make only public attributes visible '''
     def wrap(*args, **kwargs):
-        instances_list = [function(*args, **kwargs)]
-        result=[]
-        for instance in instances_list:
-            user_dct={}
-            for attr in Constants.USER_ATTR:
-                user_dct[attr] = getattr(instance.__class__, attr)
-            result.append(user_dct)
-        return result
+        instance = function(*args, **kwargs)
+        user_dct={}
+        for attr in Constants.USER_ATTR:
+            if attr=='date_of_birth':
+                user_dct[attr]=str(getattr(instance, attr)).split()[0]
+            else:
+                user_dct[attr] = getattr(instance, attr)
+        return user_dct
     return wrap
+
