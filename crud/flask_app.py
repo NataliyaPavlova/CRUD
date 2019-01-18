@@ -27,9 +27,9 @@ def add_user():
     if request.method == "POST":
         try:
             result = User().add(name=request.form.get("name"),
-                                    date_of_birth=datetime.datetime.strptime(request.form.get("date_of_birth"), '%Y-%m-%d'),
-                                    email=request.form.get("email")
-                                    )
+                                date_of_birth=request.form.get("date_of_birth"),
+                                email=request.form.get("email")
+                                )
         except AssertionError as err:
             return apology(err,400)
     # User reached route via GET
@@ -41,29 +41,30 @@ def add_user():
 
 @app.route("/get", methods = ['GET'])
 def get_user():
-    ''' Forward main page to user_info page'''
+    ''' Forward from main page to user_info page'''
 
     email = request.args['email']
     user = User().get_user('email', email)
 
-    return render_template('user_info.html', user=user)
+    return render_template('user_info.html', title='User Info', user=user)
 
 
-@app.route("/update", methods = ['GET', 'POST'])
+@app.route("/update", methods = ['POST', 'GET'])
 def update_user():
     ''' Update user's info'''
 
-    old_email = request.args['email']
-    user = User().get_user('email', old_email)
-
      # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        result = User().update(user_id=user.id,
-                                       name=request.form.get("username"),
-                                       date_of_birth=request.form.get("date of birth"),
-                                       email=request.form.get("email")
-                                      )
-    return render_template('user_info.html', user=result)
+        user = User().get_user('email', request.form.get("old_email"))
+        result = User().update(user.id,
+                               name=request.form.get("name"),
+                               date_of_birth=request.form.get("date_of_birth"),
+                               email=request.form.get("new_email")
+                               )
+    # User reached route via GET
+    else:
+        return render_template("update.html", title='Update')
+    return render_template('user_info.html', title='User Info', user=result)
 
 
 @app.route("/remove", methods = ['GET'])

@@ -3,8 +3,8 @@ import datetime
 import re
 import sqlalchemy
 from sqlalchemy.orm import validates
+
 from config import db
-from utils_softdelete import QueryWithSoftDelete
 from user_repository import UserRepository
 from helpers import apology
 
@@ -49,6 +49,6 @@ class User(UserRepository):
             raise AssertionError('No date of birth provided')
         #if not isinstance(date_of_birth, datetime.datetime):
         #    raise AssertionError('Provided birthdate is not a date')
-        return date_of_birth
+        return datetime.datetime.strptime(date_of_birth, '%Y-%m-%d')
 
 

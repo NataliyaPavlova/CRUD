@@ -5,11 +5,10 @@
 
 {% block main %}
 
-  <div><a href="/">  Back to the users' list </a></div><br>
-  <div><a href="/update">  Update the user's info </a></div><br>
-  <div><a href="/remove?email={{ user['email'] }}">  Remove the user from the list </a></div><br>
+  <div><a href="/get?email=">  Back to the user info </a></div><br>
+  <div><a href="/">  Back to users' list </a></div><br>
+  <div><a href="/remove?email=}}">  Remove the user from the list </a></div><br>
 
-{% if form %}
 <h2>Update User:</h2>
     <form action="/update" method="post">
         <table>
@@ -34,21 +33,8 @@
             </tr>
         </table>
     </form>
-{% endif %}
-
-  <br>
-  <table>
-      <tr>
-          <td>Name:</td>
-          <td>{{ user['name'] }}</td>
-      </tr>
-      <tr>
-          <td> Email: </td>
-          <td>{{ user['email'] }}</td>
-      </tr>
-      <tr>
-          <td>Date of birth:</td>
-          <td>{{ user['date_of_birth'] }}</td>
-      </tr>
-  </table>
 {% endblock %}
+
+
+
+

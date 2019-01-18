@@ -1,4 +1,4 @@
-from config import db
+from config import db, Constants
 from helpers import make_public
 from utils_softdelete import QueryWithSoftDelete
 
@@ -10,10 +10,9 @@ class UserRepository(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     query_class = QueryWithSoftDelete
 
-    def save(self, commit=True):
+    def save(self):
         db.session.add(self)
-        if commit:
-            db.session.commit()
+        db.session.commit()
         return self
 
     @classmethod
@@ -23,14 +22,17 @@ class UserRepository(db.Model):
         return instance.save()
 
     @classmethod
-    @make_public
+   #@make_public
     def get_user(cls, attr_name, attr_value):
-        return cls.query.filter(getattr(cls, attr_name)==attr_value)
+        return db.session.query(cls).filter(getattr(cls, attr_name)==attr_value).first()
 
-    def update(self, commit=True, **kwargs):
+    @classmethod
+    def update(cls, user_id, **kwargs):
+        user = cls.get_user('id', user_id)
         for attr, value in kwargs.items():
-            setattr(self, attr, value)
-        return commit and self.save() or self
+            setattr(user, attr, value)
+        user.save()
+        return user
 
     @classmethod
     #@make_public
