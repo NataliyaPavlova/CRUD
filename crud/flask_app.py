@@ -69,8 +69,8 @@ def remove_user():
     ''' Remove user and forward to main page'''
 
     email = request.args['email']
-    result = User().remove(email)
-    return render_template('index.html')
+    User().remove(email)
+    return redirect('/')
 
 
 def errorhandler(e):

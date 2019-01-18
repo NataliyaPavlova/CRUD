@@ -3,7 +3,7 @@ Class to redefine sqlalchemy query to properly manage soft delete pattern.
 Source: https://github.com/miguelgrinberg/sqlalchemy-soft-delete/blob/master/app.py '''
 
 from flask_sqlalchemy import BaseQuery
-from config import db
+#from config import db
 
 class QueryWithSoftDelete(BaseQuery):
     _with_deleted = False
@@ -19,7 +19,7 @@ class QueryWithSoftDelete(BaseQuery):
     def __init__(self, *args, **kwargs):
         pass
 
-    def with_deleted(self):
+'''    def with_deleted(self):
         return self.__class__(db.class_mapper(self._mapper_zero().class_),
                               session=db.session(), _with_deleted=True)
 
@@ -33,4 +33,4 @@ class QueryWithSoftDelete(BaseQuery):
         obj = self.with_deleted()._get(*args, **kwargs)
         return obj if obj is None or self._with_deleted or not obj.deleted else None
 
-
+'''

@@ -1,6 +1,5 @@
-from config import db, Constants
-from helpers import user_public_info, make_public
-from utils_softdelete import QueryWithSoftDelete
+from config import db
+from helpers import make_public
 
 # Depository with user's functionality
 
@@ -8,7 +7,6 @@ class UserRepository(db.Model):
     __abstract__=True
 
     id = db.Column(db.Integer, primary_key=True)
-    query_class = QueryWithSoftDelete
 
     def save(self):
         db.session.add(self)
@@ -30,6 +28,7 @@ class UserRepository(db.Model):
     @classmethod
     @make_public
     def update(cls, email, **kwargs):
+        ''' Update given attributes '''
         user = db.session.query(cls).filter(getattr(cls, 'email')==email).first()
         for attr, value in kwargs.items():
             setattr(user, attr, value)
@@ -39,11 +38,15 @@ class UserRepository(db.Model):
     @classmethod
     #@make_public
     def get_list(cls, page, users_per_page):
-        # Retrieve specific number of users' names and emails from the db
+        ''' Retrieve specific number of users' names and emails from the db '''
         users = db.session.query(cls).\
                            paginate(page, users_per_page, False)
         return users
 
+    @classmethod
+    def remove(cls, email):
+        ''' Removes user with given email using soft delete pattern '''
+        user = cls.update(email, deleted = True)
 
 
 
