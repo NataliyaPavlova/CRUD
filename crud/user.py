@@ -47,8 +47,6 @@ class User(UserRepository):
     def validate_dob(self, key, date_of_birth):
         if not date_of_birth:
             raise AssertionError('No date of birth provided')
-        #if not isinstance(date_of_birth, datetime.datetime):
-        #    raise AssertionError('Provided birthdate is not a date')
-        return datetime.datetime.strptime(date_of_birth, '%Y-%m-%d')
+       return datetime.datetime.strptime(date_of_birth, '%Y-%m-%d')
 
 
